@@ -18,7 +18,6 @@
             --secondary: #0d47a1;
             --dark: #0f172a;
             --light: #f8fafc;
-            --card-bg: #ffffff;
             --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -29,7 +28,6 @@
             overflow-x: hidden;
         }
 
-        /* Running Announcement Banner */
         .announcement-bar {
             background: linear-gradient(90deg, #ffd700 0%, #ffae00 100%);
             color: #000;
@@ -38,10 +36,8 @@
             font-weight: 700;
             font-size: 0.88rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            transition: var(--transition-smooth);
         }
 
-        /* Top Navbar Glassmorphism */
         nav {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
@@ -50,7 +46,6 @@
             position: sticky;
             top: 0;
             z-index: 90;
-            transition: var(--transition-smooth);
         }
 
         .nav-container {
@@ -83,9 +78,6 @@
             padding: 9px 18px;
             border-radius: 8px;
             transition: var(--transition-smooth);
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .menu-btn:hover {
@@ -93,7 +85,6 @@
             transform: translateY(-1px);
         }
 
-        /* Sidebar Glass & Animation */
         .sidebar {
             position: fixed;
             top: 0;
@@ -134,11 +125,6 @@
             align-items: center;
             justify-content: center;
             transition: var(--transition-smooth);
-        }
-
-        .close-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
         }
 
         .sidebar-menu {
@@ -190,7 +176,6 @@
             padding: 40px 20px;
         }
 
-        /* Smooth Page Section Transitions */
         .page-section {
             display: none;
             opacity: 0;
@@ -222,7 +207,6 @@
             border-radius: 4px;
         }
 
-        /* Hero Banner Premium */
         .hero {
             background: linear-gradient(135deg, var(--secondary) 0%, #1e3a8a 100%);
             color: white;
@@ -235,18 +219,7 @@
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; }
         .hero h3 { font-size: 1.15rem; font-weight: 500; opacity: 0.9; margin-bottom: 18px; }
         .hero p { font-size: 1.05rem; opacity: 0.85; margin-bottom: 28px; max-width: 650px; margin-left: auto; margin-right: auto; }
 
@@ -267,14 +240,8 @@
         .btn-cta:hover {
             background-color: var(--primary-hover);
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 12px 25px rgba(211, 47, 47, 0.45);
         }
 
-        .btn-cta:active {
-            transform: translateY(0) scale(0.98);
-        }
-
-        /* Modern Grid Cards with Hover Depth */
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -295,7 +262,6 @@
         .card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 30px -10px rgba(0,0,0,0.08);
-            border-color: #cbd5e1;
         }
 
         .card-header {
@@ -304,7 +270,6 @@
             padding: 15px;
             text-align: center;
             font-weight: 700;
-            font-size: 1.05rem;
         }
 
         .card-speed {
@@ -316,7 +281,7 @@
             font-weight: 800;
         }
 
-        .card-speed small { display: block; font-size: 0.8rem; font-weight: 500; opacity: 0.9; }
+        .card-speed small { display: block; font-size: 0.8rem; font-weight: 500; }
 
         .card-body {
             padding: 24px 20px;
@@ -330,7 +295,6 @@
         .price { font-size: 1.6rem; font-weight: 800; margin-bottom: 5px; color: var(--dark); }
         .installation { font-size: 0.88rem; color: #64748b; margin-bottom: 18px; }
 
-        /* General Info Box */
         .info-box {
             background: white;
             padding: 30px;
@@ -346,7 +310,6 @@
         .info-box h4 {
             color: var(--secondary);
             margin-bottom: 10px;
-            font-size: 1.1rem;
         }
 
         .info-box ul { list-style: none; padding: 0; }
@@ -359,22 +322,9 @@
             left: 0;
         }
 
-        /* Modern Form Styling */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--dark);
-            font-size: 0.92rem;
-        }
-
-        .form-group input, 
-        .form-group select, 
-        .form-group textarea {
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--dark); }
+        .form-group input, .form-group select, .form-group textarea {
             width: 100%;
             padding: 13px 16px;
             border: 1.5px solid #cbd5e1;
@@ -385,9 +335,7 @@
             background-color: #fafafa;
         }
 
-        .form-group input:focus, 
-        .form-group select:focus, 
-        .form-group textarea:focus {
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
             border-color: var(--secondary);
             background-color: #ffffff;
             box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.12);
@@ -402,20 +350,9 @@
             cursor: pointer;
             font-weight: 700;
             margin-top: 6px;
-            display: inline-block;
-            transition: var(--transition-smooth);
         }
 
-        .btn-location:hover {
-            background-color: #0369a1;
-            transform: translateY(-2px);
-        }
-
-        .location-status {
-            font-size: 0.88rem;
-            margin-top: 8px;
-            font-weight: 600;
-        }
+        .location-status { font-size: 0.88rem; margin-top: 8px; font-weight: 600; }
 
         details {
             background: #f8fafc;
@@ -423,28 +360,12 @@
             border-radius: 10px;
             padding: 14px 18px;
             margin-bottom: 12px;
-            transition: var(--transition-smooth);
         }
 
-        details[open] {
-            background: #ffffff;
-            border-color: #cbd5e1;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        }
+        summary { font-weight: 700; color: var(--secondary); cursor: pointer; }
+        details p { margin-top: 12px; color: #475569; font-size: 0.95rem; }
 
-        summary {
-            font-weight: 700;
-            color: var(--secondary);
-            cursor: pointer;
-        }
-
-        details p {
-            margin-top: 12px;
-            color: #475569;
-            font-size: 0.95rem;
-        }
-
-        /* Glassmorphism Modals */
+        /* Modal Glass */
         .modal-popup {
             position: fixed;
             top: 0;
@@ -453,7 +374,6 @@
             height: 100%;
             background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -463,10 +383,7 @@
             transition: opacity 0.3s ease;
         }
 
-        .modal-popup.active {
-            display: flex;
-            opacity: 1;
-        }
+        .modal-popup.active { display: flex; opacity: 1; }
 
         .modal-card {
             background: white;
@@ -481,14 +398,9 @@
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .modal-popup.active .modal-card {
-            transform: scale(1) translateY(0);
-        }
+        .modal-popup.active .modal-card { transform: scale(1) translateY(0); }
 
-        .modal-icon {
-            font-size: 52px;
-            margin-bottom: 12px;
-        }
+        .modal-icon { font-size: 52px; margin-bottom: 12px; }
 
         .btn-close-modal {
             background-color: var(--secondary);
@@ -500,42 +412,13 @@
             cursor: pointer;
             width: 100%;
             margin-top: 20px;
-            font-size: 1rem;
-            transition: var(--transition-smooth);
         }
 
-        .btn-close-modal:hover {
-            opacity: 0.92;
-            transform: translateY(-1px);
-        }
+        .modal-input-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+        .modal-input-title { font-size: 1.2rem; font-weight: 800; color: var(--dark); text-align: left; }
+        .modal-input-desc { font-size: 0.9rem; color: #64748b; text-align: left; margin-bottom: 22px; }
 
-        /* Modern Input WA Modal */
-        .modal-input-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-
-        .modal-input-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            color: var(--dark);
-            text-align: left;
-        }
-
-        .modal-input-desc {
-            font-size: 0.9rem;
-            color: #64748b;
-            text-align: left;
-            margin-bottom: 22px;
-        }
-
-        .input-wa-wrapper {
-            position: relative;
-            margin-bottom: 22px;
-        }
-
+        .input-wa-wrapper { position: relative; margin-bottom: 22px; }
         .input-wa-wrapper input {
             width: 100%;
             padding: 14px 16px 14px 50px;
@@ -544,85 +427,28 @@
             font-size: 1.05rem;
             font-weight: 600;
             outline: none;
-            transition: var(--transition-smooth);
-            color: var(--dark);
             background: #fafafa;
         }
 
-        .input-wa-wrapper input:focus {
-            border-color: #25d366;
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.15);
-        }
+        .input-wa-wrapper input:focus { border-color: #25d366; background: #ffffff; box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.15); }
+        .input-wa-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 22px; }
 
-        .input-wa-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 22px;
-        }
+        .modal-action-btns { display: flex; gap: 12px; }
+        .btn-modal-cancel { background: #f1f5f9; color: #475569; border: none; padding: 13px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; flex: 1; }
+        .btn-modal-confirm { background: #25d366; color: white; border: none; padding: 13px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; flex: 2; }
 
-        .modal-action-btns {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn-modal-cancel {
-            background: #f1f5f9;
-            color: #475569;
-            border: none;
-            padding: 13px 20px;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            flex: 1;
-            transition: var(--transition-smooth);
-        }
-
-        .btn-modal-confirm {
-            background: #25d366;
-            color: white;
-            border: none;
-            padding: 13px 20px;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            flex: 2;
-            transition: var(--transition-smooth);
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-modal-confirm:hover {
-            background: #1ea952;
-            transform: translateY(-2px);
-        }
-
-        footer {
-            background: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            margin-top: 50px;
-        }
-
-        footer p.sub-company {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            margin-top: 6px;
-        }
+        footer { background: var(--dark); color: white; text-align: center; padding: 30px 20px; margin-top: 50px; }
+        footer p.sub-company { font-size: 0.85rem; color: #94a3b8; margin-top: 6px; }
     </style>
 </head>
 <body>
 
-    <!-- Running Banner Promo (Dinamis dari Sheet Pengaturan) -->
     <div class="announcement-bar" id="announcementText">
         ⏳ Memuat promo terbaru...
     </div>
 
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-    <!-- POPUP NOTIFIKASI STATUS -->
     <div class="modal-popup" id="statusModal">
         <div class="modal-card">
             <div class="modal-icon" id="modalIcon">✅</div>
@@ -632,7 +458,6 @@
         </div>
     </div>
 
-    <!-- POPUP INPUT NO WA MODERN -->
     <div class="modal-popup" id="inputWaModal">
         <div class="modal-card" style="text-align: left;">
             <div class="modal-input-header">
@@ -655,7 +480,6 @@
         </div>
     </div>
 
-    <!-- Sidebar Menu Samping -->
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <div class="logo-side">BAROKAH.NET Navigasi</div>
@@ -673,7 +497,6 @@
         </ul>
     </aside>
 
-    <!-- Top Navbar -->
     <nav>
         <div class="nav-container">
             <div class="logo">BAROKAH<span>.NET</span></div>
@@ -681,10 +504,8 @@
         </div>
     </nav>
 
-    <!-- Container Utama -->
     <main class="container">
 
-        <!-- 1. BERANDA -->
         <section id="beranda" class="page-section active-section">
             <div class="hero">
                 <h1>BAROKAH.NET</h1>
@@ -704,7 +525,6 @@
             </div>
         </section>
 
-        <!-- 2. PAKET BULANAN -->
         <section id="paket" class="page-section">
             <h2 class="section-title">Daftar Paket Internet Bulanan</h2>
             <div class="packages-grid" id="containerPaket">
@@ -712,7 +532,6 @@
             </div>
         </section>
 
-        <!-- 3. HARGA VOUCHER HOTSPOT -->
         <section id="voucher" class="page-section">
             <h2 class="section-title">Daftar Harga Voucher Hotspot</h2>
             <p style="text-align: center; margin-bottom: 25px; color: #64748b;">Gunakan di jaringan WiFi Hotspot BAROKAH.NET terdekat di lokasi Anda.</p>
@@ -722,7 +541,6 @@
             </div>
         </section>
 
-        <!-- 4. FORM PENDAFTARAN ONLINE -->
         <section id="daftar" class="page-section">
             <h2 class="section-title">Formulir Pendaftaran Langsung</h2>
             <div class="info-box" style="border-left-color: var(--primary);">
@@ -768,7 +586,6 @@
             </div>
         </section>
 
-        <!-- 5. AREA JANGKAUAN -->
         <section id="jangkauan" class="page-section">
             <h2 class="section-title">Area Jangkauan Jaringan</h2>
             <div class="info-box">
@@ -781,7 +598,6 @@
             </div>
         </section>
 
-        <!-- 6. CARA PEMBAYARAN -->
         <section id="pembayaran" class="page-section">
             <h2 class="section-title">Metode Pembayaran Tagihan</h2>
             <div class="info-box">
@@ -812,7 +628,6 @@
             </div>
         </section>
 
-        <!-- 7. FAQ -->
         <section id="faq" class="page-section">
             <h2 class="section-title">Pertanyaan Umum (FAQ)</h2>
             <div class="info-box">
@@ -831,7 +646,6 @@
             </div>
         </section>
 
-        <!-- 8. SYARAT & KETENTUAN -->
         <section id="syarat" class="page-section">
             <h2 class="section-title">Syarat & Ketentuan Layanan</h2>
             <div class="info-box">
@@ -851,7 +665,6 @@
         <p class="sub-company">Dikelola oleh PT. Internet Sejahtera Barokah</p>
     </footer>
 
-    <!-- JavaScript Engine -->
     <script>
         const URL_GAS_BACKEND = "https://script.google.com/macros/s/AKfycbwgDu4yxmeNvEysiJiV7UbNj6K_A-ICEEYjmqljs0H6DoVt0HqjzvZlUFAprQSxxtagxQ/exec";
 
