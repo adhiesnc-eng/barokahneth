@@ -422,7 +422,7 @@
 
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-    <!-- POPUP STATUS PENDAFTARAN/TRANSAKSI (NO REDIRECT WA) -->
+    <!-- POPUP STATUS PENDAFTARAN/TRANSAKSI -->
     <div class="modal-popup" id="statusModal">
         <div class="modal-card">
             <div class="modal-icon" id="modalIcon">✅</div>
@@ -481,99 +481,21 @@
             </div>
         </section>
 
-        <!-- 2. PAKET BULANAN -->
+        <!-- 2. PAKET BULANAN (DINAMIS DARI GOOGLE SHEETS) -->
         <section id="paket" class="page-section">
             <h2 class="section-title">Daftar Paket Internet Bulanan</h2>
-            <div class="packages-grid">
-                
-                <div class="card">
-                    <div class="card-header">Paket JITU 2 - Internet Only</div>
-                    <div class="card-speed"><small>Kecepatan</small>30 Mbps</div>
-                    <div class="card-body">
-                        <div class="price">Rp 244.500<small>/bln</small></div>
-                        <div class="installation">Biaya Pemasangan: Rp 166.500</div>
-                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('Paket JITU 2 - 30 Mbps (Internet Only)')">PILIH PAKET</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">Paket JITU 1 - Internet + Phone</div>
-                    <div class="card-speed"><small>Kecepatan</small>30 Mbps</div>
-                    <div class="card-body">
-                        <div class="price">Rp 310.800<small>/bln</small></div>
-                        <div class="installation">Biaya Pemasangan: Rp 55.000</div>
-                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('Paket JITU 1 - 30 Mbps (Internet + Phone)')">PILIH PAKET</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">Paket JITU 1 - 1P Internet</div>
-                    <div class="card-speed"><small>Kecepatan</small>50 Mbps</div>
-                    <div class="card-body">
-                        <div class="price">Rp 388.500<small>/bln</small></div>
-                        <div class="installation" style="color:green; font-weight:bold;">GRATIS BIAYA PASANG</div>
-                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('Paket JITU 1 - 50 Mbps (Gratis Pasang)')">PILIH PAKET</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">Paket JITU 1 - High Speed</div>
-                    <div class="card-speed"><small>Kecepatan</small>100 Mbps</div>
-                    <div class="card-body">
-                        <div class="price">Rp 471.750<small>/bln</small></div>
-                        <div class="installation" style="color:green; font-weight:bold;">GRATIS BIAYA PASANG</div>
-                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('Paket JITU 1 - 100 Mbps (Gratis Pasang)')">PILIH PAKET</button>
-                    </div>
-                </div>
-
+            <div class="packages-grid" id="containerPaket">
+                <p style="text-align: center; grid-column: 1/-1; color: #64748b;">⏳ Memuat data paket dari database...</p>
             </div>
         </section>
 
-        <!-- 3. HARGA VOUCHER HOTSPOT -->
+        <!-- 3. HARGA VOUCHER HOTSPOT (DINAMIS DARI GOOGLE SHEETS) -->
         <section id="voucher" class="page-section">
             <h2 class="section-title">Daftar Harga Voucher Hotspot</h2>
             <p style="text-align: center; margin-bottom: 25px; color: #64748b;">Gunakan di jaringan WiFi Hotspot BAROKAH.NET terdekat di lokasi Anda.</p>
             
-            <div class="packages-grid">
-                <div class="card">
-                    <div class="card-header">Voucher Hemat 2 Jam</div>
-                    <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>2 Jam</div>
-                    <div class="card-body">
-                        <div class="price">Rp 2.000</div>
-                        <div class="installation">Kecepatan up to 5 Mbps</div>
-                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('2 JAM - Rp 2.000')">Beli Voucher</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">Voucher Harian 12 Jam</div>
-                    <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>12 Jam</div>
-                    <div class="card-body">
-                        <div class="price">Rp 5.000</div>
-                        <div class="installation">Kecepatan up to 7 Mbps</div>
-                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('12 JAM - Rp 5.000')">Beli Voucher</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">Voucher Full 24 Jam</div>
-                    <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>24 Jam</div>
-                    <div class="card-body">
-                        <div class="price">Rp 8.000</div>
-                        <div class="installation">Kecepatan up to 10 Mbps</div>
-                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('24 JAM - Rp 8.000')">Beli Voucher</button>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header">Voucher Mingguan</div>
-                    <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>7 Hari</div>
-                    <div class="card-body">
-                        <div class="price">Rp 35.000</div>
-                        <div class="installation">Kecepatan up to 10 Mbps</div>
-                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('7 HARI - Rp 35.000')">Beli Voucher</button>
-                    </div>
-                </div>
+            <div class="packages-grid" id="containerVoucher">
+                <p style="text-align: center; grid-column: 1/-1; color: #64748b;">⏳ Memuat data voucher dari database...</p>
             </div>
         </section>
 
@@ -598,10 +520,6 @@
                         <label for="paketPilihan">Pilihan Paket WiFi:</label>
                         <select id="paketPilihan" required>
                             <option value="">-- Pilih Paket Internet --</option>
-                            <option value="Paket JITU 2 - 30 Mbps (Internet Only)">30 Mbps - Internet Only (Rp 244.500/bln)</option>
-                            <option value="Paket JITU 1 - 30 Mbps (Internet + Phone)">30 Mbps - Internet + Phone (Rp 310.800/bln)</option>
-                            <option value="Paket JITU 1 - 50 Mbps (Gratis Pasang)">50 Mbps - 1P Internet (Rp 388.500/bln)</option>
-                            <option value="Paket JITU 1 - 100 Mbps (Gratis Pasang)">100 Mbps - High Speed (Rp 471.750/bln)</option>
                         </select>
                     </div>
 
@@ -640,7 +558,7 @@
             </div>
         </section>
 
-        <!-- 6. CARA PEMBAYARAN (PRIVASI REKENING TERPROTEKSI) -->
+        <!-- 6. CARA PEMBAYARAN -->
         <section id="pembayaran" class="page-section">
             <h2 class="section-title">Metode Pembayaran Tagihan</h2>
             <div class="info-box">
@@ -710,10 +628,95 @@
         <p class="sub-company">Dikelola oleh PT. Internet Sejahtera Barokah</p>
     </footer>
 
-    <!-- JavaScript Engine Backend Communication -->
+    <!-- JavaScript Engine Communication dengan GAS -->
     <script>
-        // URL WEB APP GOOGLE APPS SCRIPT
         const URL_GAS_BACKEND = "https://script.google.com/macros/s/AKfycbwgDu4yxmeNvEysiJiV7UbNj6K_A-ICEEYjmqljs0H6DoVt0HqjzvZlUFAprQSxxtagxQ/exec";
+
+        // MEMUAT DATA DINAMIS DARI GOOGLE SHEETS SAAT HALAMAN DIBUKA
+        window.addEventListener('DOMContentLoaded', () => {
+            muatDataPortal();
+        });
+
+        function muatDataPortal() {
+            fetch(`${URL_GAS_BACKEND}?action=getPortalData`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.status) {
+                    renderPaketBulanan(data.paket);
+                    renderVoucherHotspot(data.voucher);
+                    populateSelectOptions(data.paket);
+                }
+            })
+            .catch(err => {
+                console.error("Gagal memuat data dari Sheets:", err);
+            });
+        }
+
+        function renderPaketBulanan(listPaket) {
+            const container = document.getElementById('containerPaket');
+            if (!listPaket || listPaket.length === 0) {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">Belum ada paket aktif saat ini.</p>';
+                return;
+            }
+
+            let html = '';
+            listPaket.forEach(item => {
+                const harga = parseInt(item.Harga_Bulanan).toLocaleString('id-ID');
+                const pasang = item.Biaya_Pasang == 0 ? '<span style="color:green; font-weight:bold;">GRATIS BIAYA PASANG</span>' : `Biaya Pemasangan: Rp ${parseInt(item.Biaya_Pasang).toLocaleString('id-ID')}`;
+
+                html += `
+                <div class="card">
+                    <div class="card-header">${item.Nama_Paket}</div>
+                    <div class="card-speed"><small>Kecepatan</small>${item.Kecepatan}</div>
+                    <div class="card-body">
+                        <div class="price">Rp ${harga}<small>/bln</small></div>
+                        <div class="installation">${pasang}</div>
+                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('${item.Nama_Paket} (${item.Kecepatan})')">PILIH PAKET</button>
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function renderVoucherHotspot(listVoucher) {
+            const container = document.getElementById('containerVoucher');
+            if (!listVoucher || listVoucher.length === 0) {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1/-1;">Belum ada voucher aktif saat ini.</p>';
+                return;
+            }
+
+            let html = '';
+            listVoucher.forEach(item => {
+                const harga = parseInt(item.Harga).toLocaleString('id-ID');
+
+                html += `
+                <div class="card">
+                    <div class="card-header">${item.Nama_Voucher}</div>
+                    <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>${item.Masa_Aktif}</div>
+                    <div class="card-body">
+                        <div class="price">Rp ${harga}</div>
+                        <div class="installation">Kecepatan up to ${item.Kecepatan}</div>
+                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('${item.Nama_Voucher} - Rp ${harga}')">Beli Voucher</button>
+                    </div>
+                </div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function populateSelectOptions(listPaket) {
+            const select = document.getElementById('paketPilihan');
+            select.innerHTML = '<option value="">-- Pilih Paket Internet --</option>';
+
+            listPaket.forEach(item => {
+                const harga = parseInt(item.Harga_Bulanan).toLocaleString('id-ID');
+                const option = document.createElement('option');
+                option.value = `${item.Nama_Paket} (${item.Kecepatan})`;
+                option.textContent = `${item.Nama_Paket} (${item.Kecepatan}) - Rp ${harga}/bln`;
+                select.appendChild(option);
+            });
+        }
 
         function openSidebar() {
             document.getElementById("sidebar").classList.add("active");
@@ -789,7 +792,6 @@
             document.getElementById("statusModal").classList.remove("active");
         }
 
-        // FUNGSI UTAMA KIRIM DENGAN BACKEND GAS (NO REDIRECT WA)
         function kirimPendaftaranDirect(event) {
             event.preventDefault();
 
@@ -854,7 +856,6 @@
             });
         }
 
-        // FUNGSI PERMINTAAN DETAIL REKENING TERPROTEKSI
         function mintaDetailRekening() {
             const noHpUser = prompt("Masukkan Nomor WhatsApp Anda untuk pengiriman detail rekening resmi:");
             if (!noHpUser) return;
