@@ -18,7 +18,7 @@ if (!$data) {
 }
 
 // MASUKKAN TOKEN API FONNTE DEVICE ANDA DI SINI
-$tokenFonnte = "ISI_TOKEN_FONNTE_DEVICE_ANDA_DI_SINI";
+$tokenFonnte = "p1NYTiLzm5KFnFAt9uNr";
 
 // Variabel Input Fonnte
 $sender   = isset($data['sender']) ? $data['sender'] : '';         // Nomor WA Pengirim
