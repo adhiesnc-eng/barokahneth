@@ -9,14 +9,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
         }
 
         :root {
             --primary: #d32f2f;
+            --primary-hover: #b71c1c;
             --secondary: #0d47a1;
-            --dark: #1e293b;
+            --dark: #0f172a;
             --light: #f8fafc;
+            --card-bg: #ffffff;
+            --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         body {
@@ -26,21 +29,28 @@
             overflow-x: hidden;
         }
 
+        /* Running Announcement Banner */
         .announcement-bar {
-            background-color: #ffd700;
+            background: linear-gradient(90deg, #ffd700 0%, #ffae00 100%);
             color: #000;
             text-align: center;
-            padding: 8px 10px;
-            font-weight: bold;
-            font-size: 0.85rem;
+            padding: 10px 15px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: var(--transition-smooth);
         }
 
+        /* Top Navbar Glassmorphism */
         nav {
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
             position: sticky;
             top: 0;
             z-index: 90;
+            transition: var(--transition-smooth);
         }
 
         .nav-container {
@@ -53,9 +63,10 @@
         }
 
         .logo {
-            font-size: 22px;
-            font-weight: bold;
+            font-size: 24px;
+            font-weight: 800;
             color: var(--primary);
+            letter-spacing: -0.5px;
         }
 
         .logo span {
@@ -64,30 +75,35 @@
 
         .menu-btn {
             font-size: 15px;
-            font-weight: bold;
+            font-weight: 700;
             background: #f1f5f9;
-            border: 1px solid #cbd5e1;
+            border: 1px solid #e2e8f0;
             color: var(--dark);
             cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: background 0.2s;
+            padding: 9px 18px;
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .menu-btn:hover {
             background-color: #e2e8f0;
+            transform: translateY(-1px);
         }
 
+        /* Sidebar Glass & Animation */
         .sidebar {
             position: fixed;
             top: 0;
-            left: -280px;
-            width: 280px;
+            left: -300px;
+            width: 300px;
             height: 100%;
             background-color: #ffffff;
-            box-shadow: 2px 0 15px rgba(0,0,0,0.2);
+            box-shadow: 10px 0 30px rgba(0,0,0,0.1);
             z-index: 1000;
-            transition: left 0.3s ease;
+            transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             flex-direction: column;
         }
@@ -97,7 +113,7 @@
         }
 
         .sidebar-header {
-            padding: 20px;
+            padding: 22px;
             background-color: var(--secondary);
             color: white;
             display: flex;
@@ -106,34 +122,47 @@
         }
 
         .close-btn {
-            background: none;
+            background: rgba(255,255,255,0.15);
             border: none;
             color: white;
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
         }
 
         .sidebar-menu {
             list-style: none;
-            padding: 10px 0;
+            padding: 15px 0;
         }
 
         .sidebar-menu li a {
             display: block;
-            padding: 14px 25px;
+            padding: 15px 25px;
             color: var(--dark);
             text-decoration: none;
             font-weight: 600;
-            border-bottom: 1px solid #f1f5f9;
-            transition: background 0.2s, color 0.2s;
+            border-bottom: 1px solid #f8fafc;
+            transition: var(--transition-smooth);
             cursor: pointer;
         }
 
         .sidebar-menu li a:hover,
         .sidebar-menu li a.active-link {
-            background-color: #f8fafc;
+            background-color: #f1f5f9;
             color: var(--primary);
-            border-left: 4px solid var(--primary);
+            padding-left: 32px;
+            border-left: 5px solid var(--primary);
         }
 
         .overlay {
@@ -142,13 +171,17 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(4px);
             z-index: 999;
             display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .overlay.active {
             display: block;
+            opacity: 1;
         }
 
         .container {
@@ -157,25 +190,26 @@
             padding: 40px 20px;
         }
 
+        /* Smooth Page Section Transitions */
         .page-section {
             display: none;
+            opacity: 0;
+            transform: translateY(18px) scale(0.99);
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .page-section.active-section {
             display: block;
-            animation: fadeIn 0.4s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            opacity: 1;
+            transform: translateY(0) scale(1);
         }
 
         .section-title {
             text-align: center;
-            font-size: 1.8rem;
-            margin-bottom: 30px;
+            font-size: 1.85rem;
+            margin-bottom: 35px;
             color: var(--dark);
+            font-weight: 800;
         }
 
         .section-title::after {
@@ -184,100 +218,139 @@
             width: 50px;
             height: 4px;
             background: var(--primary);
-            margin: 8px auto 0 auto;
-            border-radius: 2px;
+            margin: 10px auto 0 auto;
+            border-radius: 4px;
         }
 
+        /* Hero Banner Premium */
         .hero {
             background: linear-gradient(135deg, var(--secondary) 0%, #1e3a8a 100%);
             color: white;
-            padding: 60px 20px;
+            padding: 70px 24px;
             text-align: center;
-            border-radius: 12px;
-            margin-bottom: 30px;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 15px 30px -10px rgba(13, 71, 161, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .hero h1 { font-size: 2.2rem; margin-bottom: 10px; }
-        .hero h3 { font-size: 1.1rem; font-weight: normal; opacity: 0.8; margin-bottom: 15px; }
-        .hero p { font-size: 1rem; opacity: 0.9; margin-bottom: 20px; }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .hero h3 { font-size: 1.15rem; font-weight: 500; opacity: 0.9; margin-bottom: 18px; }
+        .hero p { font-size: 1.05rem; opacity: 0.85; margin-bottom: 28px; max-width: 650px; margin-left: auto; margin-right: auto; }
 
         .btn-cta {
             background-color: var(--primary);
             color: white;
-            padding: 12px 25px;
+            padding: 14px 32px;
             text-decoration: none;
-            font-weight: bold;
-            border-radius: 25px;
+            font-weight: 700;
+            border-radius: 50px;
             display: inline-block;
             cursor: pointer;
             border: none;
-            transition: background 0.3s;
+            box-shadow: 0 8px 20px rgba(211, 47, 47, 0.35);
+            transition: var(--transition-smooth);
         }
 
         .btn-cta:hover {
-            background-color: #b71c1c;
+            background-color: var(--primary-hover);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(211, 47, 47, 0.45);
         }
 
+        .btn-cta:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Modern Grid Cards with Hover Depth */
         .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 24px;
         }
 
         .card {
             background: white;
-            border-radius: 10px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
             border: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
+            transition: var(--transition-smooth);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.08);
+            border-color: #cbd5e1;
         }
 
         .card-header {
             background: var(--secondary);
             color: white;
-            padding: 12px;
+            padding: 15px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 1.05rem;
         }
 
         .card-speed {
             background: var(--primary);
             color: white;
             text-align: center;
-            padding: 15px;
-            font-size: 1.8rem;
-            font-weight: bold;
+            padding: 18px;
+            font-size: 2rem;
+            font-weight: 800;
         }
 
-        .card-speed small { display: block; font-size: 0.8rem; font-weight: normal; }
+        .card-speed small { display: block; font-size: 0.8rem; font-weight: 500; opacity: 0.9; }
 
         .card-body {
-            padding: 20px;
+            padding: 24px 20px;
             text-align: center;
             flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .price { font-size: 1.5rem; font-weight: bold; margin-bottom: 5px; }
-        .installation { font-size: 0.85rem; color: #64748b; margin-bottom: 15px; }
+        .price { font-size: 1.6rem; font-weight: 800; margin-bottom: 5px; color: var(--dark); }
+        .installation { font-size: 0.88rem; color: #64748b; margin-bottom: 18px; }
 
+        /* General Info Box */
         .info-box {
             background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            border-left: 5px solid var(--secondary);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border-left: 6px solid var(--secondary);
             line-height: 1.8;
+            border-top: 1px solid #f1f5f9;
+            border-right: 1px solid #f1f5f9;
+            border-bottom: 1px solid #f1f5f9;
         }
 
         .info-box h4 {
             color: var(--secondary);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
 
         .info-box ul { list-style: none; padding: 0; }
-        .info-box li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .info-box li { margin-bottom: 12px; padding-left: 24px; position: relative; }
         .info-box li::before {
             content: "✓";
             color: var(--primary);
@@ -286,68 +359,92 @@
             left: 0;
         }
 
+        /* Modern Form Styling */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             color: var(--dark);
+            font-size: 0.92rem;
         }
 
         .form-group input, 
         .form-group select, 
         .form-group textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 1rem;
+            padding: 13px 16px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 0.98rem;
             outline: none;
-            transition: border-color 0.2s;
+            transition: var(--transition-smooth);
+            background-color: #fafafa;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus, 
+        .form-group textarea:focus {
+            border-color: var(--secondary);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(13, 71, 161, 0.12);
         }
 
         .btn-location {
             background-color: #0284c7;
             color: white;
-            padding: 10px 15px;
+            padding: 11px 18px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
             margin-top: 6px;
             display: inline-block;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-location:hover {
+            background-color: #0369a1;
+            transform: translateY(-2px);
         }
 
         .location-status {
-            font-size: 0.85rem;
-            margin-top: 5px;
-            font-weight: bold;
+            font-size: 0.88rem;
+            margin-top: 8px;
+            font-weight: 600;
         }
 
         details {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            transition: var(--transition-smooth);
+        }
+
+        details[open] {
+            background: #ffffff;
+            border-color: #cbd5e1;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
 
         summary {
-            font-weight: bold;
+            font-weight: 700;
             color: var(--secondary);
             cursor: pointer;
         }
 
         details p {
-            margin-top: 10px;
+            margin-top: 12px;
             color: #475569;
             font-size: 0.95rem;
         }
 
-        /* MODAL COMMON STYLES */
+        /* Glassmorphism Modals */
         .modal-popup {
             position: fixed;
             top: 0;
@@ -355,38 +452,41 @@
             width: 100%;
             height: 100%;
             background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 2000;
             padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .modal-popup.active {
             display: flex;
-            animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.92) translateY(10px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
+            opacity: 1;
         }
 
         .modal-card {
             background: white;
             width: 100%;
             max-width: 420px;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             text-align: center;
-            padding: 28px 24px;
-            position: relative;
+            padding: 32px 26px;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-popup.active .modal-card {
+            transform: scale(1) translateY(0);
         }
 
         .modal-icon {
-            font-size: 48px;
+            font-size: 52px;
             margin-bottom: 12px;
         }
 
@@ -394,21 +494,22 @@
             background-color: var(--secondary);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-weight: bold;
+            padding: 13px 25px;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
+            margin-top: 20px;
             font-size: 1rem;
-            transition: opacity 0.2s;
+            transition: var(--transition-smooth);
         }
 
         .btn-close-modal:hover {
-            opacity: 0.9;
+            opacity: 0.92;
+            transform: translateY(-1px);
         }
 
-        /* STYLES KHUSUS POPUP INPUT NO WA MODERN */
+        /* Modern Input WA Modal */
         .modal-input-header {
             display: flex;
             align-items: center;
@@ -417,115 +518,121 @@
         }
 
         .modal-input-title {
-            font-size: 1.15rem;
-            font-weight: 700;
+            font-size: 1.2rem;
+            font-weight: 800;
             color: var(--dark);
             text-align: left;
         }
 
         .modal-input-desc {
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             color: #64748b;
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .input-wa-wrapper {
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .input-wa-wrapper input {
             width: 100%;
-            padding: 14px 16px 14px 48px;
+            padding: 14px 16px 14px 50px;
             border: 2px solid #e2e8f0;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 1.05rem;
             font-weight: 600;
             outline: none;
-            transition: all 0.2s;
+            transition: var(--transition-smooth);
             color: var(--dark);
+            background: #fafafa;
         }
 
         .input-wa-wrapper input:focus {
             border-color: #25d366;
+            background: #ffffff;
             box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.15);
         }
 
         .input-wa-icon {
             position: absolute;
-            left: 14px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 20px;
+            font-size: 22px;
         }
 
         .modal-action-btns {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .btn-modal-cancel {
             background: #f1f5f9;
             color: #475569;
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-weight: 600;
+            padding: 13px 20px;
+            border-radius: 10px;
+            font-weight: 700;
             cursor: pointer;
             flex: 1;
+            transition: var(--transition-smooth);
         }
 
         .btn-modal-confirm {
             background: #25d366;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 13px 20px;
+            border-radius: 10px;
             font-weight: 700;
             cursor: pointer;
             flex: 2;
-            transition: background 0.2s;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
         }
 
         .btn-modal-confirm:hover {
             background: #1ea952;
+            transform: translateY(-2px);
         }
 
         footer {
             background: var(--dark);
             color: white;
             text-align: center;
-            padding: 25px 20px;
-            margin-top: 40px;
+            padding: 30px 20px;
+            margin-top: 50px;
         }
 
         footer p.sub-company {
             font-size: 0.85rem;
             color: #94a3b8;
-            margin-top: 5px;
+            margin-top: 6px;
         }
     </style>
 </head>
 <body>
 
-    <div class="announcement-bar">
-        🚀 SEGERA HADIR! Dapatkan harga spesial jaringan super cepat BAROKAH.NET. Persiapkan diri Anda
+    <!-- Running Banner Promo (Dinamis dari Sheet Pengaturan) -->
+    <div class="announcement-bar" id="announcementText">
+        ⏳ Memuat promo terbaru...
     </div>
 
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-    <!-- POPUP NOTIFIKASI STATUS (NO REDIRECT WA) -->
+    <!-- POPUP NOTIFIKASI STATUS -->
     <div class="modal-popup" id="statusModal">
         <div class="modal-card">
             <div class="modal-icon" id="modalIcon">✅</div>
             <h3 id="modalTitle">Pendaftaran Berhasil!</h3>
-            <p id="modalMessage" style="color: #64748b; font-size: 0.9rem; margin-top: 8px;">Data Anda telah berhasil diproses. Tim BAROKAH.NET akan segera menghubungi Anda.</p>
+            <p id="modalMessage" style="color: #64748b; font-size: 0.92rem; margin-top: 8px;">Data Anda telah berhasil diproses. Tim BAROKAH.NET akan segera menghubungi Anda.</p>
             <button class="btn-close-modal" onclick="closeStatusModal()">Tutup Window</button>
         </div>
     </div>
 
-    <!-- POPUP INPUT NO WA MODERN (REPLACING PROMPT) -->
+    <!-- POPUP INPUT NO WA MODERN -->
     <div class="modal-popup" id="inputWaModal">
         <div class="modal-card" style="text-align: left;">
             <div class="modal-input-header">
@@ -597,7 +704,7 @@
             </div>
         </section>
 
-        <!-- 2. PAKET BULANAN (DINAMIS DARI GOOGLE SHEETS) -->
+        <!-- 2. PAKET BULANAN -->
         <section id="paket" class="page-section">
             <h2 class="section-title">Daftar Paket Internet Bulanan</h2>
             <div class="packages-grid" id="containerPaket">
@@ -605,7 +712,7 @@
             </div>
         </section>
 
-        <!-- 3. HARGA VOUCHER HOTSPOT (DINAMIS DARI GOOGLE SHEETS) -->
+        <!-- 3. HARGA VOUCHER HOTSPOT -->
         <section id="voucher" class="page-section">
             <h2 class="section-title">Daftar Harga Voucher Hotspot</h2>
             <p style="text-align: center; margin-bottom: 25px; color: #64748b;">Gunakan di jaringan WiFi Hotspot BAROKAH.NET terdekat di lokasi Anda.</p>
@@ -656,7 +763,7 @@
                         <input type="text" id="catatan" placeholder="Contoh: Depan Toko Kelontong Bu Siti">
                     </div>
 
-                    <button type="submit" id="btnSubmitForm" class="btn-cta" style="width: 100%; border-radius: 8px; font-size: 1.1rem;">🚀 Kirim Pendaftaran Sekarang</button>
+                    <button type="submit" id="btnSubmitForm" class="btn-cta" style="width: 100%; border-radius: 10px; font-size: 1.1rem;">🚀 Kirim Pendaftaran Sekarang</button>
                 </form>
             </div>
         </section>
@@ -690,11 +797,11 @@
                     <li><strong>Pembayaran Tunai:</strong> Melalui Kasir/Petugas Resmi di Kantor Layanan</li>
                 </ul>
 
-                <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; text-align: center; margin-top: 15px;">
-                    <p style="color: #166534; font-weight: bold; margin-bottom: 10px;">
+                <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 18px; border-radius: 12px; text-align: center; margin-top: 15px;">
+                    <p style="color: #166534; font-weight: 700; margin-bottom: 12px;">
                         Dapatkan Detail Nomor Rekening Resmi & Konfirmasi Pembayaran
                     </p>
-                    <button class="btn-cta" style="background-color: #25d366; width: 100%; max-width: 320px; font-size: 0.95rem;" onclick="openMintaRekeningModal()">
+                    <button class="btn-cta" style="background-color: #25d366; width: 100%; max-width: 320px; font-size: 0.98rem; box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);" onclick="openMintaRekeningModal()">
                         💬 Minta Rekening ke Admin WA
                     </button>
                 </div>
@@ -748,8 +855,8 @@
     <script>
         const URL_GAS_BACKEND = "https://script.google.com/macros/s/AKfycbwgDu4yxmeNvEysiJiV7UbNj6K_A-ICEEYjmqljs0H6DoVt0HqjzvZlUFAprQSxxtagxQ/exec";
 
-        let currentActionType = ""; // 'voucher' atau 'rekening'
-        let currentItemPayload = ""; // Menyimpan nama voucher jika pilih voucher
+        let currentActionType = ""; 
+        let currentItemPayload = ""; 
 
         window.addEventListener('DOMContentLoaded', () => {
             muatDataPortal();
@@ -760,6 +867,9 @@
             .then(res => res.json())
             .then(data => {
                 if (data.status) {
+                    if (data.teksPromo) {
+                        document.getElementById('announcementText').innerText = data.teksPromo;
+                    }
                     renderPaketBulanan(data.paket);
                     renderVoucherHotspot(data.voucher);
                     populateSelectOptions(data.paket);
@@ -787,9 +897,11 @@
                     <div class="card-header">${item.Nama_Paket}</div>
                     <div class="card-speed"><small>Kecepatan</small>${item.Kecepatan}</div>
                     <div class="card-body">
-                        <div class="price">Rp ${harga}<small>/bln</small></div>
-                        <div class="installation">${pasang}</div>
-                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('${item.Nama_Paket} (${item.Kecepatan})')">PILIH PAKET</button>
+                        <div>
+                            <div class="price">Rp ${harga}<small>/bln</small></div>
+                            <div class="installation">${pasang}</div>
+                        </div>
+                        <button class="btn-cta" style="width:100%; border-radius:10px;" onclick="pilihPaket('${item.Nama_Paket} (${item.Kecepatan})')">PILIH PAKET</button>
                     </div>
                 </div>`;
             });
@@ -813,9 +925,11 @@
                     <div class="card-header">${item.Nama_Voucher}</div>
                     <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>${item.Masa_Aktif}</div>
                     <div class="card-body">
-                        <div class="price">Rp ${harga}</div>
-                        <div class="installation">Kecepatan up to ${item.Kecepatan}</div>
-                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="openBeliVoucherModal('${item.Nama_Voucher} - Rp ${harga}')">Beli Voucher</button>
+                        <div>
+                            <div class="price">Rp ${harga}</div>
+                            <div class="installation">Kecepatan up to ${item.Kecepatan}</div>
+                        </div>
+                        <button class="btn-cta" style="width:100%; border-radius:10px; background-color: #0284c7;" onclick="openBeliVoucherModal('${item.Nama_Voucher} - Rp ${harga}')">Beli Voucher</button>
                     </div>
                 </div>`;
             });
@@ -910,7 +1024,6 @@
             document.getElementById("statusModal").classList.remove("active");
         }
 
-        /* MANAJEMEN POPUP MODAL INPUT NO WA MODERN */
         function openBeliVoucherModal(namaVoucher) {
             currentActionType = "voucher";
             currentItemPayload = namaVoucher;
