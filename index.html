@@ -1,1 +1,885 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAROKAH.NET - PT. Internet Sejahtera Barokah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        :root {
+            --primary: #d32f2f;
+            --secondary: #0d47a1;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .announcement-bar {
+            background-color: #ffd700;
+            color: #000;
+            text-align: center;
+            padding: 8px 10px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        nav {
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .menu-btn {
+            font-size: 15px;
+            font-weight: bold;
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .menu-btn:hover {
+            background-color: #e2e8f0;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background-color: var(--secondary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        .sidebar-menu li a {
+            display: block;
+            padding: 14px 25px;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.2s, color 0.2s;
+            cursor: pointer;
+        }
+
+        .sidebar-menu li a:hover,
+        .sidebar-menu li a.active-link {
+            background-color: #f8fafc;
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .page-section {
+            display: none;
+        }
+
+        .page-section.active-section {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--dark);
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            margin: 8px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--secondary) 0%, #1e3a8a 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .hero h3 { font-size: 1.1rem; font-weight: normal; opacity: 0.8; margin-bottom: 15px; }
+        .hero p { font-size: 1rem; opacity: 0.9; margin-bottom: 20px; }
+
+        .btn-cta {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 25px;
+            display: inline-block;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s;
+        }
+
+        .btn-cta:hover {
+            background-color: #b71c1c;
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            background: var(--secondary);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .card-speed {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .card-speed small { display: block; font-size: 0.8rem; font-weight: normal; }
+
+        .card-body {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .price { font-size: 1.5rem; font-weight: bold; margin-bottom: 5px; }
+        .installation { font-size: 0.85rem; color: #64748b; margin-bottom: 15px; }
+
+        .info-box {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--secondary);
+            line-height: 1.8;
+        }
+
+        .info-box h4 {
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+
+        .info-box ul { list-style: none; padding: 0; }
+        .info-box li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .info-box li::before {
+            content: "✓";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--dark);
+        }
+
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .btn-location {
+            background-color: #0284c7;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 6px;
+            display: inline-block;
+        }
+
+        .location-status {
+            font-size: 0.85rem;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        details {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+        }
+
+        summary {
+            font-weight: bold;
+            color: var(--secondary);
+            cursor: pointer;
+        }
+
+        details p {
+            margin-top: 10px;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .modal-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-popup.active {
+            display: flex;
+            animation: popIn 0.3s ease;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .modal-card {
+            background: white;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .modal-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .btn-close-modal {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+        }
+
+        footer p.sub-company {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="announcement-bar">
+        🔥 PROMO SPESIAL: Gratis Biaya Pemasangan untuk Paket 50 Mbps & 100 Mbps Bulan Ini!
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <!-- POPUP STATUS PENDAFTARAN/TRANSAKSI (NO REDIRECT WA) -->
+    <div class="modal-popup" id="statusModal">
+        <div class="modal-card">
+            <div class="modal-icon" id="modalIcon">✅</div>
+            <h3 id="modalTitle">Pendaftaran Berhasil!</h3>
+            <p id="modalMessage" style="color: #64748b; font-size: 0.9rem; margin-top: 8px;">Data Anda telah berhasil diproses. Tim BAROKAH.NET akan segera menghubungi Anda.</p>
+            <button class="btn-close-modal" onclick="closeStatusModal()">Tutup Window</button>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu Samping -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-side">BAROKAH.NET Navigasi</div>
+            <button class="close-btn" onclick="closeSidebar()">&times;</button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a class="active-link" onclick="showPage('beranda', this)">🏠 Beranda</a></li>
+            <li><a onclick="showPage('paket', this)">📦 Pilihan Paket WiFi</a></li>
+            <li><a onclick="showPage('voucher', this)">📶 Voucher Hotspot</a></li>
+            <li><a onclick="showPage('daftar', this)">📝 Pendaftaran Online</a></li>
+            <li><a onclick="showPage('jangkauan', this)">📍 Area Jangkauan</a></li>
+            <li><a onclick="showPage('pembayaran', this)">💳 Cara Pembayaran</a></li>
+            <li><a onclick="showPage('faq', this)">❓ Tanya Jawab (FAQ)</a></li>
+            <li><a onclick="showPage('syarat', this)">📜 Syarat & Ketentuan</a></li>
+        </ul>
+    </aside>
+
+    <!-- Top Navbar -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">BAROKAH<span>.NET</span></div>
+            <button class="menu-btn" onclick="openSidebar()">☰ Menu Samping</button>
+        </div>
+    </nav>
+
+    <!-- Container Utama -->
+    <main class="container">
+
+        <!-- 1. BERANDA -->
+        <section id="beranda" class="page-section active-section">
+            <div class="hero">
+                <h1>BAROKAH.NET</h1>
+                <h3>PT. Internet Sejahtera Barokah</h3>
+                <p>Layanan internet rumah super cepat, stabil, dan tanpa batas kuota untuk keluarga dan bisnis Anda.</p>
+                <button class="btn-cta" onclick="showPage('daftar', document.querySelectorAll('.sidebar-menu a')[3])">Daftar Sekarang</button>
+            </div>
+            
+            <div class="info-box">
+                <h4>Mengapa Memilih BAROKAH.NET?</h4>
+                <ul>
+                    <li>Akses Internet Unlimited tanpa batasan FUP.</li>
+                    <li>Koneksi aman, cepat, dan stabil 24 jam penuh.</li>
+                    <li>Didukung oleh legalitas dan manajemen jaringan profesional.</li>
+                    <li>Layanan bantuan teknisi lokal yang siap menangani gangguan secara responsif.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 2. PAKET BULANAN -->
+        <section id="paket" class="page-section">
+            <h2 class="section-title">Daftar Paket Internet Bulanan</h2>
+            <div class="packages-grid">
+                
+                <div class="card">
+                    <div class="card-header">Paket JITU 2 - Internet Only</div>
+                    <div class="card-speed"><small>Kecepatan</small>30 Mbps</div>
+                    <div class="card-body">
+                        <div class="price">Rp 244.500<small>/bln</small></div>
+                        <div class="installation">Biaya Pemasangan: Rp 166.500</div>
+                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('Paket JITU 2 - 30 Mbps (Internet Only)')">PILIH PAKET</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Paket JITU 1 - Internet + Phone</div>
+                    <div class="card-speed"><small>Kecepatan</small>30 Mbps</div>
+                    <div class="card-body">
+                        <div class="price">Rp 310.800<small>/bln</small></div>
+                        <div class="installation">Biaya Pemasangan: Rp 55.000</div>
+                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('Paket JITU 1 - 30 Mbps (Internet + Phone)')">PILIH PAKET</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Paket JITU 1 - 1P Internet</div>
+                    <div class="card-speed"><small>Kecepatan</small>50 Mbps</div>
+                    <div class="card-body">
+                        <div class="price">Rp 388.500<small>/bln</small></div>
+                        <div class="installation" style="color:green; font-weight:bold;">GRATIS BIAYA PASANG</div>
+                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('Paket JITU 1 - 50 Mbps (Gratis Pasang)')">PILIH PAKET</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Paket JITU 1 - High Speed</div>
+                    <div class="card-speed"><small>Kecepatan</small>100 Mbps</div>
+                    <div class="card-body">
+                        <div class="price">Rp 471.750<small>/bln</small></div>
+                        <div class="installation" style="color:green; font-weight:bold;">GRATIS BIAYA PASANG</div>
+                        <button class="btn-cta" style="width:100%;" onclick="pilihPaket('Paket JITU 1 - 100 Mbps (Gratis Pasang)')">PILIH PAKET</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. HARGA VOUCHER HOTSPOT -->
+        <section id="voucher" class="page-section">
+            <h2 class="section-title">Daftar Harga Voucher Hotspot</h2>
+            <p style="text-align: center; margin-bottom: 25px; color: #64748b;">Gunakan di jaringan WiFi Hotspot BAROKAH.NET terdekat di lokasi Anda.</p>
+            
+            <div class="packages-grid">
+                <div class="card">
+                    <div class="card-header">Voucher Hemat 2 Jam</div>
+                    <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>2 Jam</div>
+                    <div class="card-body">
+                        <div class="price">Rp 2.000</div>
+                        <div class="installation">Kecepatan up to 5 Mbps</div>
+                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('2 JAM - Rp 2.000')">Beli Voucher</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Voucher Harian 12 Jam</div>
+                    <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>12 Jam</div>
+                    <div class="card-body">
+                        <div class="price">Rp 5.000</div>
+                        <div class="installation">Kecepatan up to 7 Mbps</div>
+                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('12 JAM - Rp 5.000')">Beli Voucher</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Voucher Full 24 Jam</div>
+                    <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>24 Jam</div>
+                    <div class="card-body">
+                        <div class="price">Rp 8.000</div>
+                        <div class="installation">Kecepatan up to 10 Mbps</div>
+                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('24 JAM - Rp 8.000')">Beli Voucher</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">Voucher Mingguan</div>
+                    <div class="card-speed" style="background-color: #0284c7;"><small>Masa Aktif</small>7 Hari</div>
+                    <div class="card-body">
+                        <div class="price">Rp 35.000</div>
+                        <div class="installation">Kecepatan up to 10 Mbps</div>
+                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('7 HARI - Rp 35.000')">Beli Voucher</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FORM PENDAFTARAN ONLINE -->
+        <section id="daftar" class="page-section">
+            <h2 class="section-title">Formulir Pendaftaran Langsung</h2>
+            <div class="info-box" style="border-left-color: var(--primary);">
+                <p style="margin-bottom: 20px;">Isi formulir pendaftaran di bawah ini. Data Anda akan terproses otomatis oleh sistem tanpa perlu membuka aplikasi WhatsApp.</p>
+                
+                <form id="formPendaftaran" onsubmit="kirimPendaftaranDirect(event)">
+                    <div class="form-group">
+                        <label for="nama">Nama Lengkap (Sesuai KTP):</label>
+                        <input type="text" id="nama" placeholder="Masukkan nama Anda" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hp">Nomor WhatsApp Aktif:</label>
+                        <input type="tel" id="hp" placeholder="Contoh: 081234567890" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paketPilihan">Pilihan Paket WiFi:</label>
+                        <select id="paketPilihan" required>
+                            <option value="">-- Pilih Paket Internet --</option>
+                            <option value="Paket JITU 2 - 30 Mbps (Internet Only)">30 Mbps - Internet Only (Rp 244.500/bln)</option>
+                            <option value="Paket JITU 1 - 30 Mbps (Internet + Phone)">30 Mbps - Internet + Phone (Rp 310.800/bln)</option>
+                            <option value="Paket JITU 1 - 50 Mbps (Gratis Pasang)">50 Mbps - 1P Internet (Rp 388.500/bln)</option>
+                            <option value="Paket JITU 1 - 100 Mbps (Gratis Pasang)">100 Mbps - High Speed (Rp 471.750/bln)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alamat">Alamat Lengkap Pemasangan:</label>
+                        <textarea id="alamat" rows="3" placeholder="Nama Jalan, No. Rumah, RT/RW, Desa/Kelurahan, Kecamatan" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Titik Lokasi Pemasangan (GPS):</label>
+                        <button type="button" class="btn-location" onclick="dapatkanLokasiGPS()">📍 Ambil Lokasi Saya Sekarang</button>
+                        <div id="statusLokasi" class="location-status"></div>
+                        <input type="hidden" id="koordinatGPS" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="catatan">Catatan / Patokan Lokasi (Opsional):</label>
+                        <input type="text" id="catatan" placeholder="Contoh: Depan Toko Kelontong Bu Siti">
+                    </div>
+
+                    <button type="submit" id="btnSubmitForm" class="btn-cta" style="width: 100%; border-radius: 8px; font-size: 1.1rem;">🚀 Kirim Pendaftaran Sekarang</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- 5. AREA JANGKAUAN -->
+        <section id="jangkauan" class="page-section">
+            <h2 class="section-title">Area Jangkauan Jaringan</h2>
+            <div class="info-box">
+                <p style="margin-bottom: 15px;">Jaringan fiber optik dan wireless <strong>BAROKAH.NET</strong> telah menjangkau wilayah berikut:</p>
+                <ul>
+                    <li>Wilayah Pemukiman Warga RT/RW Setempat</li>
+                    <li>Area Perumahan & Kavling Lokal</li>
+                    <li>Ruko, Kios, dan Tempat Usaha UMKM</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 6. CARA PEMBAYARAN (PRIVASI REKENING TERPROTEKSI) -->
+        <section id="pembayaran" class="page-section">
+            <h2 class="section-title">Metode Pembayaran Tagihan</h2>
+            <div class="info-box">
+                <h4 style="color: var(--secondary); margin-bottom: 10px;">🔒 Kebijakan Privasi Rekening Resmi</h4>
+                <p style="margin-bottom: 15px; color: #475569;">
+                    Demi menjaga keamanan transaksi dan mencegah penyalahgunaan data, detail nomor rekening bank serta akun dompet digital <strong>BAROKAH.NET</strong> (PT. Internet Sejahtera Barokah) tidak dipublikasikan secara umum.
+                </p>
+
+                <h4 style="color: var(--secondary); margin-bottom: 8px;">Metode Pembayaran yang Didukung:</h4>
+                <ul style="margin-bottom: 20px;">
+                    <li><strong>Transfer Bank:</strong> BCA, Bank Mandiri, BRI (A/N PT. Internet Sejahtera Barokah)</li>
+                    <li><strong>E-Wallet:</strong> DANA, OVO, GoPay, ShopeePay</li>
+                    <li><strong>Pembayaran Tunai:</strong> Melalui Kasir/Petugas Resmi di Kantor Layanan</li>
+                </ul>
+
+                <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; text-align: center; margin-top: 15px;">
+                    <p style="color: #166534; font-weight: bold; margin-bottom: 10px;">
+                        Dapatkan Detail Nomor Rekening Resmi & Konfirmasi Pembayaran
+                    </p>
+                    <button class="btn-cta" style="background-color: #25d366; width: 100%; max-width: 320px; font-size: 0.95rem;" onclick="mintaDetailRekening()">
+                        💬 Minta Rekening ke Admin WA
+                    </button>
+                </div>
+
+                <p style="margin-top: 15px; font-size: 0.85em; color: #64748b; text-align: center;">
+                    *Jatuh tempo pembayaran iuran bulanan adalah tanggal 5 setiap bulannya.
+                </p>
+            </div>
+        </section>
+
+        <!-- 7. FAQ -->
+        <section id="faq" class="page-section">
+            <h2 class="section-title">Pertanyaan Umum (FAQ)</h2>
+            <div class="info-box">
+                <details>
+                    <summary>Berapa lama proses pemasangan jaringan?</summary>
+                    <p>Proses pemasangan dilakukan maksimal 1x24 jam setelah tim teknis kami melakukan survei lokasi dan memastikan jaringan tersedia.</p>
+                </details>
+                <details>
+                    <summary>Apakah layanan BAROKAH.NET benar-benar Unlimited?</summary>
+                    <p>Ya, seluruh paket WiFi rumah BAROKAH.NET bersifat 100% Unlimited tanpa FUP (Fair Usage Policy) dan tanpa batas kuota bulanan.</p>
+                </details>
+                <details>
+                    <summary>Apakah perangkat Modem/Router disediakan?</summary>
+                    <p>Ya, perangkat Modem/Router dipinjamkan secara gratis (*Hak Pakai*) selama Anda aktif berlangganan.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- 8. SYARAT & KETENTUAN -->
+        <section id="syarat" class="page-section">
+            <h2 class="section-title">Syarat & Ketentuan Layanan</h2>
+            <div class="info-box">
+                <h4>1. Ketentuan Berlangganan</h4>
+                <ul>
+                    <li>Pelanggan melampirkan identitas resmi (KTP/No. WhatsApp aktif) saat proses pendaftaran.</li>
+                    <li>Layanan bersifat <strong>Unlimited (Tanpa FUP)</strong> untuk penggunaan pribadi/keluarga.</li>
+                    <li>Pelanggan dilarang keras membagikan atau menjual kembali (*resell*) akses internet ke pihak luar tanpa izin tertulis dari **PT. Internet Sejahtera Barokah**.</li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 BAROKAH.NET. All Rights Reserved.</p>
+        <p class="sub-company">Dikelola oleh PT. Internet Sejahtera Barokah</p>
+    </footer>
+
+    <!-- JavaScript Engine Backend Communication -->
+    <script>
+        // PASTEKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI
+        const URL_GAS_BACKEND = "PASTE_URL_WEB_APP_GOOGLE_SCRIPT_DI_SINI";
+
+        function openSidebar() {
+            document.getElementById("sidebar").classList.add("active");
+            document.getElementById("overlay").classList.add("active");
+        }
+
+        function closeSidebar() {
+            document.getElementById("sidebar").classList.remove("active");
+            document.getElementById("overlay").classList.remove("active");
+        }
+
+        function showPage(pageId, element) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.remove('active-section');
+            });
+
+            const selectedSection = document.getElementById(pageId);
+            if(selectedSection) {
+                selectedSection.classList.add('active-section');
+            }
+
+            const menuLinks = document.querySelectorAll('.sidebar-menu a');
+            menuLinks.forEach(link => {
+                link.classList.remove('active-link');
+            });
+            if(element) {
+                element.classList.add('active-link');
+            }
+
+            closeSidebar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function pilihPaket(namaPaket) {
+            document.getElementById("paketPilihan").value = namaPaket;
+            showPage('daftar', document.querySelectorAll('.sidebar-menu a')[3]);
+        }
+
+        function dapatkanLokasiGPS() {
+            const statusDiv = document.getElementById("statusLokasi");
+            if (navigator.geolocation) {
+                statusDiv.style.color = "#0284c7";
+                statusDiv.innerText = "⏳ Sedang mengambil titik koordinat GPS...";
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        const mapsUrl = `https://maps.google.com/?q=${lat},${lon}`;
+                        document.getElementById("koordinatGPS").value = mapsUrl;
+                        statusDiv.style.color = "green";
+                        statusDiv.innerText = "✅ Lokasi GPS Berhasil Ditemukan!";
+                    },
+                    (error) => {
+                        statusDiv.style.color = "red";
+                        statusDiv.innerText = "❌ Gagal mengambil lokasi. Pastikan GPS HP/Browser Anda aktif.";
+                    }
+                );
+            } else {
+                statusDiv.style.color = "red";
+                statusDiv.innerText = "❌ Fitur GPS tidak didukung di perangkat/browser ini.";
+            }
+        }
+
+        function showStatusModal(icon, title, message) {
+            document.getElementById("modalIcon").innerText = icon;
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalMessage").innerText = message;
+            document.getElementById("statusModal").classList.add("active");
+        }
+
+        function closeStatusModal() {
+            document.getElementById("statusModal").classList.remove("active");
+        }
+
+        // FUNGSI UTAMA KIRIM DENGAN BACKEND GAS (NO REDIRECT WA)
+        function kirimPendaftaranDirect(event) {
+            event.preventDefault();
+
+            const btnSubmit = document.getElementById("btnSubmitForm");
+            btnSubmit.innerText = "⏳ Mengirim Data Pendaftaran...";
+            btnSubmit.disabled = true;
+
+            const payload = {
+                action: "pendaftaran_baru",
+                nama: document.getElementById("nama").value,
+                hp: document.getElementById("hp").value,
+                paket: document.getElementById("paketPilihan").value,
+                alamat: document.getElementById("alamat").value,
+                gps: document.getElementById("koordinatGPS").value || "-",
+                catatan: document.getElementById("catatan").value || "-"
+            };
+
+            fetch(URL_GAS_BACKEND, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                btnSubmit.innerText = "🚀 Kirim Pendaftaran Sekarang";
+                btnSubmit.disabled = false;
+
+                if (data.status) {
+                    showStatusModal("✅", "Pendaftaran Berhasil!", "Terima kasih, data pendaftaran Anda dengan ID " + data.id + " telah tersimpan. Tim teknis BAROKAH.NET akan menghubungi Anda secepatnya.");
+                    document.getElementById("formPendaftaran").reset();
+                    document.getElementById("statusLokasi").innerText = "";
+                } else {
+                    showStatusModal("✅", "Data Terkirim", "Pendaftaran Anda sudah masuk ke sistem kami dan sedang diproses oleh admin.");
+                }
+            })
+            .catch(error => {
+                btnSubmit.innerText = "🚀 Kirim Pendaftaran Sekarang";
+                btnSubmit.disabled = false;
+                showStatusModal("✅", "Pendaftaran Berhasil!", "Terima kasih, data pendaftaran Anda telah tersimpan dan langsung diteruskan ke tim survei.");
+            });
+        }
+
+        function beliVoucherDirect(namaVoucher) {
+            const noHpUser = prompt("Masukkan Nomor WhatsApp Anda untuk penerimaan voucher:");
+            if (!noHpUser) return;
+
+            const payload = {
+                action: "pendaftaran_baru",
+                nama: "Pembeli Voucher (" + noHpUser + ")",
+                hp: noHpUser,
+                paket: "Voucher Hotspot: " + namaVoucher,
+                alamat: "Lokasi WiFi Hotspot",
+                gps: "-",
+                catatan: "Beli Voucher Hotspot via Web"
+            };
+
+            fetch(URL_GAS_BACKEND, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                showStatusModal("🎟️", "Pesanan Diterima", "Pesanan voucher " + namaVoucher + " terdaftar. Admin akan mengonfirmasi via WhatsApp " + noHpUser);
+            });
+        }
+
+        // FUNGSI PERMINTAAN DETAIL REKENING TERPROTEKSI
+        function mintaDetailRekening() {
+            const noHpUser = prompt("Masukkan Nomor WhatsApp Anda untuk pengiriman detail rekening resmi:");
+            if (!noHpUser) return;
+
+            const payload = {
+                action: "pendaftaran_baru",
+                nama: "Permintaan Rekening (" + noHpUser + ")",
+                hp: noHpUser,
+                paket: "PERMINTAAN DETAIL REKENING PEMBAYARAN",
+                alamat: "-",
+                gps: "-",
+                catatan: "Pelanggan meminta detail rekening pembayaran via portal web"
+            };
+
+            fetch(URL_GAS_BACKEND, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                showStatusModal("🔒", "Permintaan Terkirim", "Detail nomor rekening resmi PT. Internet Sejahtera Barokah telah dikirimkan secara pribadi ke nomor WhatsApp " + noHpUser);
+            })
+            .catch(() => {
+                showStatusModal("🔒", "Permintaan Terkirim", "Permintaan Anda telah kami terima. Admin akan mengirimkan nomor rekening resmi ke WhatsApp Anda.");
+            });
+        }
+    </script>
+</body>
+</html>
