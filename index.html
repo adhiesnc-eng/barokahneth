@@ -347,13 +347,15 @@
             font-size: 0.95rem;
         }
 
+        /* MODAL COMMON STYLES */
         .modal-popup {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -363,40 +365,131 @@
 
         .modal-popup.active {
             display: flex;
-            animation: popIn 0.3s ease;
+            animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes popIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: scale(0.92) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .modal-card {
             background: white;
             width: 100%;
             max-width: 420px;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             text-align: center;
-            padding: 30px 20px;
+            padding: 28px 24px;
+            position: relative;
         }
 
         .modal-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
+            font-size: 48px;
+            margin-bottom: 12px;
         }
 
         .btn-close-modal {
             background-color: var(--secondary);
             color: white;
             border: none;
-            padding: 10px 25px;
-            border-radius: 6px;
+            padding: 12px 25px;
+            border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
             margin-top: 15px;
+            font-size: 1rem;
+            transition: opacity 0.2s;
+        }
+
+        .btn-close-modal:hover {
+            opacity: 0.9;
+        }
+
+        /* STYLES KHUSUS POPUP INPUT NO WA MODERN */
+        .modal-input-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .modal-input-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--dark);
+            text-align: left;
+        }
+
+        .modal-input-desc {
+            font-size: 0.88rem;
+            color: #64748b;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .input-wa-wrapper {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-wa-wrapper input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.2s;
+            color: var(--dark);
+        }
+
+        .input-wa-wrapper input:focus {
+            border-color: #25d366;
+            box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.15);
+        }
+
+        .input-wa-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+
+        .modal-action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-modal-cancel {
+            background: #f1f5f9;
+            color: #475569;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .btn-modal-confirm {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            flex: 2;
+            transition: background 0.2s;
+        }
+
+        .btn-modal-confirm:hover {
+            background: #1ea952;
         }
 
         footer {
@@ -422,13 +515,36 @@
 
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-    <!-- POPUP STATUS PENDAFTARAN/TRANSAKSI -->
+    <!-- POPUP NOTIFIKASI STATUS (NO REDIRECT WA) -->
     <div class="modal-popup" id="statusModal">
         <div class="modal-card">
             <div class="modal-icon" id="modalIcon">✅</div>
             <h3 id="modalTitle">Pendaftaran Berhasil!</h3>
             <p id="modalMessage" style="color: #64748b; font-size: 0.9rem; margin-top: 8px;">Data Anda telah berhasil diproses. Tim BAROKAH.NET akan segera menghubungi Anda.</p>
             <button class="btn-close-modal" onclick="closeStatusModal()">Tutup Window</button>
+        </div>
+    </div>
+
+    <!-- POPUP INPUT NO WA MODERN (REPLACING PROMPT) -->
+    <div class="modal-popup" id="inputWaModal">
+        <div class="modal-card" style="text-align: left;">
+            <div class="modal-input-header">
+                <div class="modal-input-title" id="inputWaTitle">Konfirmasi Nomor WhatsApp</div>
+                <span style="font-size: 24px; cursor: pointer; color: #94a3b8;" onclick="closeInputWaModal()">&times;</span>
+            </div>
+            <div class="modal-input-desc" id="inputWaDesc">Masukkan nomor WhatsApp aktif Anda untuk pengiriman konfirmasi layanan.</div>
+            
+            <form onsubmit="prosesInputWaModal(event)">
+                <div class="input-wa-wrapper">
+                    <span class="input-wa-icon">💬</span>
+                    <input type="tel" id="inputNoWa" placeholder="081234567890" required autocomplete="off">
+                </div>
+
+                <div class="modal-action-btns">
+                    <button type="button" class="btn-modal-cancel" onclick="closeInputWaModal()">Batal</button>
+                    <button type="submit" class="btn-modal-confirm" id="btnSubmitModalWa">Kirimkan Sekarang</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -578,7 +694,7 @@
                     <p style="color: #166534; font-weight: bold; margin-bottom: 10px;">
                         Dapatkan Detail Nomor Rekening Resmi & Konfirmasi Pembayaran
                     </p>
-                    <button class="btn-cta" style="background-color: #25d366; width: 100%; max-width: 320px; font-size: 0.95rem;" onclick="mintaDetailRekening()">
+                    <button class="btn-cta" style="background-color: #25d366; width: 100%; max-width: 320px; font-size: 0.95rem;" onclick="openMintaRekeningModal()">
                         💬 Minta Rekening ke Admin WA
                     </button>
                 </div>
@@ -628,11 +744,13 @@
         <p class="sub-company">Dikelola oleh PT. Internet Sejahtera Barokah</p>
     </footer>
 
-    <!-- JavaScript Engine Communication dengan GAS -->
+    <!-- JavaScript Engine -->
     <script>
         const URL_GAS_BACKEND = "https://script.google.com/macros/s/AKfycbwgDu4yxmeNvEysiJiV7UbNj6K_A-ICEEYjmqljs0H6DoVt0HqjzvZlUFAprQSxxtagxQ/exec";
 
-        // MEMUAT DATA DINAMIS DARI GOOGLE SHEETS SAAT HALAMAN DIBUKA
+        let currentActionType = ""; // 'voucher' atau 'rekening'
+        let currentItemPayload = ""; // Menyimpan nama voucher jika pilih voucher
+
         window.addEventListener('DOMContentLoaded', () => {
             muatDataPortal();
         });
@@ -697,7 +815,7 @@
                     <div class="card-body">
                         <div class="price">Rp ${harga}</div>
                         <div class="installation">Kecepatan up to ${item.Kecepatan}</div>
-                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="beliVoucherDirect('${item.Nama_Voucher} - Rp ${harga}')">Beli Voucher</button>
+                        <button class="btn-cta" style="width:100%; background-color: #0284c7;" onclick="openBeliVoucherModal('${item.Nama_Voucher} - Rp ${harga}')">Beli Voucher</button>
                     </div>
                 </div>`;
             });
@@ -792,6 +910,85 @@
             document.getElementById("statusModal").classList.remove("active");
         }
 
+        /* MANAJEMEN POPUP MODAL INPUT NO WA MODERN */
+        function openBeliVoucherModal(namaVoucher) {
+            currentActionType = "voucher";
+            currentItemPayload = namaVoucher;
+            document.getElementById("inputWaTitle").innerText = "Pemesanan Voucher Hotspot";
+            document.getElementById("inputWaDesc").innerText = `Masukkan nomor WhatsApp Anda untuk pengiriman kode ${namaVoucher}`;
+            document.getElementById("inputNoWa").value = "";
+            document.getElementById("inputWaModal").classList.add("active");
+        }
+
+        function openMintaRekeningModal() {
+            currentActionType = "rekening";
+            currentItemPayload = "";
+            document.getElementById("inputWaTitle").innerText = "Permintaan Rekening Resmi";
+            document.getElementById("inputWaDesc").innerText = "Masukkan nomor WhatsApp Anda. Detail rekening resmi PT. Internet Sejahtera Barokah akan dikirimkan secara pribadi.";
+            document.getElementById("inputNoWa").value = "";
+            document.getElementById("inputWaModal").classList.add("active");
+        }
+
+        function closeInputWaModal() {
+            document.getElementById("inputWaModal").classList.remove("active");
+        }
+
+        function prosesInputWaModal(event) {
+            event.preventDefault();
+            const noHpUser = document.getElementById("inputNoWa").value.trim();
+            if (!noHpUser) return;
+
+            const btnSubmit = document.getElementById("btnSubmitModalWa");
+            btnSubmit.innerText = "⏳ Memproses...";
+            btnSubmit.disabled = true;
+
+            let payload = {};
+
+            if (currentActionType === "voucher") {
+                payload = {
+                    action: "pendaftaran_baru",
+                    nama: "Pembeli Voucher (" + noHpUser + ")",
+                    hp: noHpUser,
+                    paket: "Voucher Hotspot: " + currentItemPayload,
+                    alamat: "Lokasi WiFi Hotspot",
+                    gps: "-",
+                    catatan: "Beli Voucher Hotspot via Web"
+                };
+            } else if (currentActionType === "rekening") {
+                payload = {
+                    action: "pendaftaran_baru",
+                    nama: "Permintaan Rekening (" + noHpUser + ")",
+                    hp: noHpUser,
+                    paket: "PERMINTAAN DETAIL REKENING PEMBAYARAN",
+                    alamat: "-",
+                    gps: "-",
+                    catatan: "Pelanggan meminta detail rekening pembayaran via portal web"
+                };
+            }
+
+            fetch(URL_GAS_BACKEND, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                btnSubmit.innerText = "Kirimkan Sekarang";
+                btnSubmit.disabled = false;
+                closeInputWaModal();
+
+                if (currentActionType === "voucher") {
+                    showStatusModal("🎟️", "Pesanan Diterima", "Pesanan " + currentItemPayload + " terdaftar. Admin/Bot akan mengonfirmasi detailnya ke WhatsApp " + noHpUser);
+                } else if (currentActionType === "rekening") {
+                    showStatusModal("🔒", "Permintaan Terkirim", "Detail nomor rekening resmi PT. Internet Sejahtera Barokah telah dikirimkan secara pribadi ke nomor WhatsApp " + noHpUser);
+                }
+            })
+            .catch(() => {
+                btnSubmit.innerText = "Kirimkan Sekarang";
+                btnSubmit.disabled = false;
+                closeInputWaModal();
+                showStatusModal("✅", "Permintaan Terkirim", "Permintaan Anda telah tersimpan dan langsung diteruskan ke sistem kami.");
+            });
+        }
+
         function kirimPendaftaranDirect(event) {
             event.preventDefault();
 
@@ -830,55 +1027,6 @@
                 btnSubmit.innerText = "🚀 Kirim Pendaftaran Sekarang";
                 btnSubmit.disabled = false;
                 showStatusModal("✅", "Pendaftaran Berhasil!", "Terima kasih, data pendaftaran Anda telah tersimpan dan langsung diteruskan ke tim survei.");
-            });
-        }
-
-        function beliVoucherDirect(namaVoucher) {
-            const noHpUser = prompt("Masukkan Nomor WhatsApp Anda untuk penerimaan voucher:");
-            if (!noHpUser) return;
-
-            const payload = {
-                action: "pendaftaran_baru",
-                nama: "Pembeli Voucher (" + noHpUser + ")",
-                hp: noHpUser,
-                paket: "Voucher Hotspot: " + namaVoucher,
-                alamat: "Lokasi WiFi Hotspot",
-                gps: "-",
-                catatan: "Beli Voucher Hotspot via Web"
-            };
-
-            fetch(URL_GAS_BACKEND, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            })
-            .then(() => {
-                showStatusModal("🎟️", "Pesanan Diterima", "Pesanan voucher " + namaVoucher + " terdaftar. Admin akan mengonfirmasi via WhatsApp " + noHpUser);
-            });
-        }
-
-        function mintaDetailRekening() {
-            const noHpUser = prompt("Masukkan Nomor WhatsApp Anda untuk pengiriman detail rekening resmi:");
-            if (!noHpUser) return;
-
-            const payload = {
-                action: "pendaftaran_baru",
-                nama: "Permintaan Rekening (" + noHpUser + ")",
-                hp: noHpUser,
-                paket: "PERMINTAAN DETAIL REKENING PEMBAYARAN",
-                alamat: "-",
-                gps: "-",
-                catatan: "Pelanggan meminta detail rekening pembayaran via portal web"
-            };
-
-            fetch(URL_GAS_BACKEND, {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            })
-            .then(() => {
-                showStatusModal("🔒", "Permintaan Terkirim", "Detail nomor rekening resmi PT. Internet Sejahtera Barokah telah dikirimkan secara pribadi ke nomor WhatsApp " + noHpUser);
-            })
-            .catch(() => {
-                showStatusModal("🔒", "Permintaan Terkirim", "Permintaan Anda telah kami terima. Admin akan mengirimkan nomor rekening resmi ke WhatsApp Anda.");
             });
         }
     </script>
