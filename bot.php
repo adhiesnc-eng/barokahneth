@@ -21,8 +21,8 @@ if (!$data) {
 $tokenFonnte = "p1NYTiLzm5KFnFAt9uNr";
 
 // Variabel Input Fonnte
-$sender   = isset($data['sender']) ? $data['sender'] : '';         // Nomor WA Pengirim
-$message  = isset($data['message']) ? trim($data['message']) : '';   // Isi Pesan Masuk
+$sender   = isset($data['sender']) ? $data['sender'] : '081349923481';         // Nomor WA Pengirim
+$message  = isset($data['message']) ? trim($data['message']) : 'terima kasih,...';   // Isi Pesan Masuk
 $pesanLow = strtolower($message);
 
 $reply = "";
